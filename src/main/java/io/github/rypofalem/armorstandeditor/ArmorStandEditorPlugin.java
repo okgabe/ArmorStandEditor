@@ -84,11 +84,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(editorManager, this);
 
 		hasSpigot = true;
-		try {
-			Class.forName("org.spigotmc.package-info", false, this.getClassLoader());
-		} catch (ClassNotFoundException e) {
-			hasSpigot = false;
-		}
 	}
 
 	private void updateConfig(String folder, String config) {
