@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.language.Language;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -35,7 +36,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
 	private Language lang;
-	public boolean hasSpigot;
 	public PlayerEditorManager editorManager;
 	public Material editTool = Material.FLINT;
 	boolean requireToolData = false;
@@ -75,6 +75,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		if(requireToolData) editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
 		requireToolLore = getConfig().getBoolean("requireToolLore", false);
 		if(requireToolLore) editToolLore= getConfig().getString("toolLore", null);
+		if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
 		debug = getConfig().getBoolean("debug", true);
 		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
 
@@ -82,8 +83,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		execute = new CommandEx(this);
 		getCommand("ase").setExecutor(execute);
 		getServer().getPluginManager().registerEvents(editorManager, this);
-
-		hasSpigot = true;
 	}
 
 	private void updateConfig(String folder, String config) {

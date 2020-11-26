@@ -21,18 +21,9 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
-import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
-import io.github.rypofalem.armorstandeditor.modes.ArmorStandData;
-import io.github.rypofalem.armorstandeditor.modes.Axis;
-import io.github.rypofalem.armorstandeditor.modes.CopySlots;
-import io.github.rypofalem.armorstandeditor.modes.EditMode;
-
-import java.util.ArrayList;
-import java.util.UUID;
-
+import io.github.rypofalem.armorstandeditor.modes.*;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
@@ -40,6 +31,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class PlayerEditor {
 	public ArmorStandEditorPlugin plugin;
@@ -361,17 +355,10 @@ public class PlayerEditor {
 
 	void sendMessage(String path, String format, String option){
 		String message = plugin.getLang().getMessage(path, format, option);
-		if(plugin.sendToActionBar){
-			if(ArmorStandEditorPlugin.instance().hasSpigot){
+		if(plugin.sendToActionBar)
 				plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-			} else{
-				String rawText = plugin.getLang().getRawMessage(path, format, option);
-				String command = String.format("title %s actionbar %s", plugin.getServer().getPlayer(getUUID()).getName(), rawText);
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-			}
-		} else{
+		else
 			plugin.getServer().getPlayer(getUUID()).sendMessage(message);
-		}
 	}
 
 	void sendMessage(String path, String option){
